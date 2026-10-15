@@ -63,9 +63,9 @@ resource "aws_route_table" "main" {
   }
 }
 
-resource "aws_route_table_association" "main" {
+resource "aws_route_table_association" "mains" {
   for_each = { for idx, subnet in aws_subnet.main : idx => subnet if lookup(subnet.tags, "public", false) == true }
 
   subnet_id      = each.value.id
-  route_table_id = aws_route_table.main[0].id
+  route_table_id = aws_route_table.mains[0].id
 }
